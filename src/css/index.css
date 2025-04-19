@@ -1,0 +1,21 @@
+:root {
+    --bg: #f9f6ff;
+    --text: #2f267d;
+    --sidebar-bg: #2f267d;
+    --accent: #f7c40f;
+    --card-bg: #fff;
+  }
+  
+  [data-theme="dark"] {
+    --bg: #1f1b3a;
+    --text: #eee;
+    --sidebar-bg: #17132f;
+    --accent: #f7c40f;
+    --card-bg: #2a2451;
+  }
+  
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+  }
+  

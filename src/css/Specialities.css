@@ -1,0 +1,19 @@
+.specialties {
+    max-width: 500px;
+    margin: auto;
+    color: #2f267d;
+  }
+  
+  .specialties h2 {
+    margin-bottom: 20px;
+  }
+  
+  .specialties button {
+    background-color: #f7c40f;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  

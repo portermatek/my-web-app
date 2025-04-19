@@ -1,0 +1,30 @@
+.add-doctor {
+    max-width: 600px;
+    margin: auto;
+    color: #2f267d;
+  }
+  
+  .add-doctor h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .add-doctor input,
+  .add-doctor select {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+  
+  .add-doctor button {
+    background-color: #f7c40f;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  

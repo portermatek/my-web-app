@@ -1,0 +1,16 @@
+/* admin panel layout container */
+.admin-panel {
+    display: flex;
+    height: 100vh;
+    background-color: #ede8f7; /* light background for main content */
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  /* main content area */
+  .main-content {
+    flex: 1;
+    padding: 30px;
+    background-color: #f9f6ff;
+    overflow-y: auto;
+  }
+  

@@ -1,0 +1,59 @@
+.sidebar {
+    width: 220px;
+    background-color: var(--sidebar-bg); /* uses CSS variable for theme */
+    color: var(--text);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  
+  .sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+  }
+  
+  .sidebar h3 {
+    font-size: 20px;
+    color: var(--accent);
+    margin: 0;
+  }
+  
+  .theme-toggle-btn {
+    background: none;
+    border: none;
+    color: var(--accent);
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .sidebar-nav a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #d1cbff;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  
+  .sidebar-nav a.active,
+  .sidebar-nav a:hover {
+    background-color: #413896;
+    color: #f7c40f;
+    font-weight: bold;
+  }
+  
