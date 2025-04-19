@@ -4,7 +4,7 @@ import Sidebar from '../components/Sidebar';
 import Dashboard from '../components/Dashboard';
 import Doctors from '../components/Doctors';
 import AddDoctor from '../components/AddDoctor';
-import Specialties from '../components/Specialities';
+import Specialities from '../components/Specialties';
 import Reports from '../components/Reports';
 import PhotoUpload from '../components/PhotoUpload';
 import '../css/AdminPanel.css'; // Assuming you have a CSS file for styling
@@ -18,7 +18,7 @@ const AdminPanel = () => {
           <Route path="/" element={<Dashboard />} />
           <Route path="doctors" element={<Doctors />} />
           <Route path="add-doctor" element={<AddDoctor />} />
-          <Route path="specialties" element={<Specialties />} />
+          <Route path="specialties" element={<Specialities />} />
           <Route path="reports" element={<Reports />} />
           <Route path="upload" element={<PhotoUpload />} />
         </Routes>
