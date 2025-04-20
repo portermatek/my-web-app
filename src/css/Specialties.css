@@ -1,19 +1,71 @@
 .specialties {
-    max-width: 500px;
-    margin: auto;
-    color: #2f267d;
-  }
-  
-  .specialties h2 {
-    margin-bottom: 20px;
-  }
-  
-  .specialties button {
-    background-color: #f7c40f;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #f9f9ff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  color: #2f267d;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.specialties h2 {
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  color: #1e1a5d;
+}
+
+.specialties p {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  color: #4e4c7d;
+}
+
+.specialties button {
+  background-color: #f7c40f;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #2f267d;
+  transition: background-color 0.3s ease;
+}
+
+.specialties button:hover {
+  background-color: #e5b800;
+}
+
+.add-specialty-form {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.add-specialty-form input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.add-specialty-form input:focus {
+  border-color: #2f267d;
+}
+
+.specialty-list {
+  margin-top: 1.5rem;
+  list-style: none;
+  padding-left: 0;
+  border-top: 1px solid #ddd;
+}
+
+.specialty-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 1rem;
+}
