@@ -1,18 +1,22 @@
 // src/firebase.js
-import { initializeApp } from 'firebase/app';
-import { getAnalytics } from 'firebase/analytics';
-import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
-import { getStorage } from 'firebase/storage';
 
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyByjYuH5cuJVGUIKUyTfD8DT-W0nCXGnJM",
-  authDomain: "medconnect-demo-fe3cd.firebaseapp.com",
-  projectId: "medconnect-demo-fe3cd",
-  storageBucket: "medconnect-demo-fe3cd.firebasestorage.app",
-  messagingSenderId: "393837004131",
-  appId: "1:393837004131:web:02f17f985fe0229d60bf56",
-  measurementId: "G-6DC5NEH53X"
+  apiKey: "AIzaSyDyaxVUdvw3qDxwnR39DTEn8GZUnirk0mI",
+  authDomain: "med-connect-3a5d5.firebaseapp.com",
+  projectId: "med-connect-3a5d5",
+  storageBucket: "med-connect-3a5d5.firebasestorage.app",
+  messagingSenderId: "380103516950",
+  appId: "1:380103516950:web:b8976ce85518afcdee2637",
+  measurementId: "G-2VJZDQ8Q4Y"
 };
 
 // Initialize Firebase

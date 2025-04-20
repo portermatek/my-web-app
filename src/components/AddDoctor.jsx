@@ -1,5 +1,6 @@
+// src/components/AddDoctor.js
 import React, { useState } from 'react';
-import { db, storage } from '../Firebase';
+import { db, storage } from '../Firebase'; // ✅ Make sure the import matches the actual file name and path
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import '../css/AddDoctors.css';
@@ -26,12 +27,15 @@ const AddDoctor = () => {
   const handleSubmit = async () => {
     try {
       let photoURL = '';
+
+      // ✅ Upload photo to Firebase Storage
       if (form.photo) {
-        const storageRef = ref(storage, `doctors/${form.photo.name}`);
-        await uploadBytes(storageRef, form.photo);
-        photoURL = await getDownloadURL(storageRef);
+        const photoRef = ref(storage, `doctors/${Date.now()}_${form.photo.name}`);
+        await uploadBytes(photoRef, form.photo);
+        photoURL = await getDownloadURL(photoRef);
       }
 
+      // ✅ Add doctor info to Firestore
       await addDoc(collection(db, 'doctors'), {
         name: form.name,
         email: form.email,
@@ -53,7 +57,7 @@ const AddDoctor = () => {
       });
     } catch (err) {
       console.error('Error adding doctor:', err);
-      alert('Failed to add doctor');
+      alert('Failed to add doctor. Check console for details.');
     }
   };
 
@@ -70,7 +74,7 @@ const AddDoctor = () => {
         <option value="Dermatology">Dermatology</option>
         <option value="General">General</option>
       </select>
-      <input name="photo" type="file" onChange={handleChange} />
+      <input name="photo" type="file" accept="image/*" onChange={handleChange} />
       <button onClick={handleSubmit}>Save</button>
     </div>
   );
