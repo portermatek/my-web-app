@@ -1,146 +1,90 @@
 import React, { useEffect, useState } from 'react';
-import {
-  collection,
-  getDocs,
-  doc,
-  getDoc,
-  deleteDoc
-} from 'firebase/firestore';
-import { db } from '../Firebase';
-import '../css/Doctors.css';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../Firebase'; // Adjust path based on your Firebase config
+import '../css/Doctors.css'; // Your custom styling
 
 const Doctors = () => {
   const [doctors, setDoctors] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
   const [filteredDoctors, setFilteredDoctors] = useState([]);
-  const [specialties, setSpecialties] = useState([]);
-  const [cities, setCities] = useState([]);
-  const [filters, setFilters] = useState({
-    specialty: '',
-    city: ''
-  });
 
-  // Fetch all doctors
-  const fetchAllDoctors = async () => {
-    const snapshot = await getDocs(collection(db, 'doctors'));
-    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-  };
-
-  // Fetch specialties
-  const fetchSpecialties = async () => {
-    const snapshot = await getDocs(collection(db, 'specialties'));
-    return snapshot.docs.map(doc => doc.data().name);
-  };
-
-  // Fetch city names from 'cities' collection
-  const fetchCities = async () => {
-    const snapshot = await getDocs(collection(db, 'cities'));
-    return snapshot.docs.map(doc => doc.id);
-  };
-
-  // Load initial data
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchDoctors = async () => {
       try {
-        const [doctorList, specialtyList, cityList] = await Promise.all([
-          fetchAllDoctors(),
-          fetchSpecialties(),
-          fetchCities()
-        ]);
-        setDoctors(doctorList);
-        setFilteredDoctors(doctorList);
-        setSpecialties(specialtyList);
-        setCities(cityList);
-      } catch (error) {
-        console.error('Error fetching data:', error);
+        const snapshot = await getDocs(collection(db, 'doctors'));
+        const doctorsList = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setDoctors(doctorsList);
+        setFilteredDoctors(doctorsList); // Initially show all doctors
+      } catch (err) {
+        console.error('Error fetching doctors:', err);
       }
     };
-
-    fetchData();
+    fetchDoctors();
   }, []);
 
-  // Handle filter change
-  const handleFilterChange = async (e) => {
-    const { name, value } = e.target;
-    const newFilters = { ...filters, [name]: value };
-    setFilters(newFilters);
+  const handleSearch = () => {
+    const lowerSearch = searchTerm.toLowerCase();
 
-    if (!newFilters.city && !newFilters.specialty) {
-      setFilteredDoctors(doctors);
-    } else if (newFilters.city && !newFilters.specialty) {
-      const cityDoc = await getDoc(doc(db, 'cities', newFilters.city.toLowerCase()));
-      if (cityDoc.exists()) {
-        const doctorIds = cityDoc.data().doctors?.map(doc => doc.id) || [];
-        setFilteredDoctors(doctors.filter(doc => doctorIds.includes(doc.id)));
-      }
-    } else if (!newFilters.city && newFilters.specialty) {
-      setFilteredDoctors(doctors.filter(doc => doc.specialty === newFilters.specialty));
-    } else {
-      const cityDoc = await getDoc(doc(db, 'cities', newFilters.city.toLowerCase()));
-      const doctorIds = cityDoc.exists() ? cityDoc.data().doctors?.map(doc => doc.id) : [];
-      setFilteredDoctors(
-        doctors.filter(doc =>
-          doc.specialty === newFilters.specialty && doctorIds.includes(doc.id)
-        )
-      );
-    }
-  };
-
-  // Handle delete
-  const handleDelete = async (doctorId) => {
-    const confirm = window.confirm('Are you sure you want to delete this doctor?');
-    if (!confirm) return;
-
-    try {
-      await deleteDoc(doc(db, 'doctors', doctorId));
-      const updatedDoctors = doctors.filter(doc => doc.id !== doctorId);
-      setDoctors(updatedDoctors);
-      setFilteredDoctors(updatedDoctors);
-    } catch (error) {
-      console.error('Error deleting doctor:', error);
-    }
+    const filtered = doctors.filter((doctor) =>
+      (doctor.name && doctor.name.toLowerCase().includes(lowerSearch)) ||
+      (doctor.specialty && doctor.specialty.toLowerCase().includes(lowerSearch)) ||
+      (doctor.city && doctor.city.toLowerCase().includes(lowerSearch))
+    );
+    setFilteredDoctors(filtered);
   };
 
   return (
     <div className="doctors">
       <h2>Doctors</h2>
-      <button className="add-btn">Add Doctor</button>
 
-      <div className="filters">
-        <select name="specialty" value={filters.specialty} onChange={handleFilterChange}>
-          <option value="">Filter by Specialty</option>
-          {specialties.map((spec, index) => (
-            <option key={index} value={spec}>{spec}</option>
-          ))}
-        </select>
-
-        <select name="city" value={filters.city} onChange={handleFilterChange}>
-          <option value="">Filter by City</option>
-          {cities.map((city, index) => (
-            <option key={index} value={city}>
-              {city.charAt(0).toUpperCase() + city.slice(1)}
-            </option>
-          ))}
-        </select>
+      {/* Search Section */}
+      <div className="search-bar">
+        <input
+          type="text"
+          placeholder="Search by name, specialty, or city..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <button onClick={handleSearch}>Search</button>
       </div>
 
-      <table>
-        <thead>
-          <tr><th>Name</th><th>Specialty</th><th>City</th><th>Status</th><th>Action</th></tr>
-        </thead>
-        <tbody>
-          {filteredDoctors.map((doc) => (
-            <tr key={doc.id}>
-              <td>{doc.name || '—'}</td>
-              <td>{doc.specialty || '—'}</td>
-              <td>{doc.city || '—'}</td>
-              <td>Active</td>
-              <td>
-                <button onClick={() => handleDelete(doc.id)}>Delete</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      {/* Doctors List */}
+      <div className="doctor-list">
+        {filteredDoctors.length === 0 ? (
+          <p>No doctors found.</p>
+        ) : (
+          <table>
+            <thead>
+              <tr>
+                <th>Photo</th>
+                <th>Name</th>
+                <th>Specialty</th>
+                <th>City</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredDoctors.map((doctor) => (
+                <tr key={doctor.id}>
+                  <td>
+                    {doctor.photo ? (
+                      <img
+                        src={doctor.photo}
+                        alt={doctor.name}
+                        style={{ width: '60px', height: '60px', borderRadius: '50%' }}
+                      />
+                    ) : (
+                      <span>No Photo</span>
+                    )}
+                  </td>
+                  <td>{doctor.name}</td>
+                  <td>{doctor.specialty || '-'}</td>
+                  <td>{doctor.city || '-'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
     </div>
   );
 };
