@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom'; // ✅ IMPORT THIS
+import { HashRouter } from 'react-router-dom'; // ✅ use HashRouter for GitHub Pages
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -8,9 +8,9 @@ import reportWebVitals from './reportWebVitals';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <BrowserRouter> {/* ✅ WRAP HERE */}
+    <HashRouter> {/* ✅ GitHub Pages works with HashRouter */}
       <App />
-    </BrowserRouter>
+    </HashRouter>
   </React.StrictMode>
 );
 
