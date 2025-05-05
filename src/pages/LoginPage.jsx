@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { db } from '../Firebase'; // Make sure Firebase is configured
+import { db } from '../Firebase';
 import { collection, getDocs, addDoc } from 'firebase/firestore';
 import '../css/LoginPage.css';
+import logo from '../assets/logo.png'; // Import your logo
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [adminExists, setAdminExists] = useState(false); // to check if first time
+  const [adminExists, setAdminExists] = useState(false);
 
   useEffect(() => {
     const checkAdmin = async () => {
       try {
         const snapshot = await getDocs(collection(db, 'admin'));
         if (!snapshot.empty) {
-          setAdminExists(true); // admin already exists
+          setAdminExists(true);
         }
       } catch (err) {
         console.error('Error checking admin credentials:', err);
@@ -35,12 +36,10 @@ const LoginPage = () => {
       const snapshot = await getDocs(adminRef);
 
       if (snapshot.empty) {
-        // First-time login → Save credentials
         await addDoc(adminRef, { email, password });
         alert('Admin account created successfully!');
         navigate('/admin');
       } else {
-        // Validate credentials
         const adminDoc = snapshot.docs[0];
         const savedEmail = adminDoc.data().email;
         const savedPassword = adminDoc.data().password;
@@ -60,6 +59,7 @@ const LoginPage = () => {
   return (
     <div className="login-container">
       <div className="login-box">
+        <img src={logo} alt="MediConnect Logo" className="login-logo" />
         <h2>{adminExists ? 'Admin Login' : 'Set Admin Credentials'}</h2>
         <input
           type="email"
