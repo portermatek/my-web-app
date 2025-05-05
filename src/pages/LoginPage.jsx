@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { db } from '../Firebase';
 import { collection, getDocs, addDoc } from 'firebase/firestore';
 import '../css/LoginPage.css';
-import logo from '../assets/logo.png'; // Import your logo
+import logo from '../assets/app_icon.png'; // Import your logo
 
 const LoginPage = () => {
   const navigate = useNavigate();
